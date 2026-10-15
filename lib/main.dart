@@ -14,8 +14,16 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  var dice1 = 4;
-  var dice2 = 5;
+  var dice1 = 1;
+  var dice2 = 1;
+  var score1 = 0;
+  var score2 = 0;
+  var round = 0;
+  var player = false;
+  var pressed1 = true;
+  var pressed2 = false;
+
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -83,10 +91,18 @@ class _MyAppState extends State<MyApp> {
                     child: TextButton(
                       onPressed: () {
                       setState(() {
-                        dice1 = Random().nextInt(6) + 1;
+                        if(!player){
+                          dice1 = Random().nextInt(6)+1;
+                          player = true;
+                          pressed2= false;
+                          pressed1 = true;
+                        }
                       });
                     },
-                      child: Image.asset('images/dice$dice1.png')),
+                      child: Image(image: AssetImage('images/dice$dice1.png'),
+                      color: pressed1 ? Colors.orange : Colors.white,
+                      ),
+                    ),
                   ),
                 ),
                   Expanded(
@@ -95,10 +111,25 @@ class _MyAppState extends State<MyApp> {
                       child: TextButton(
                         onPressed: () {
                       setState(() {
-                        dice2 = Random().nextInt(6) + 1;
+                        if(player){
+                          dice2 = Random().nextInt(6)+1;
+                          player = false;
+                          pressed2= true;
+                          pressed1 = false;
+                          if (dice1 > dice2){
+                            score1++;
+                          }else if (dice2 > dice1){
+                            score2++;
+                          }
+
+                          
+                        }                        
                       });
                     },
-                        child: Expanded(child: Image.asset('images/dice$dice2.png'))),
+                        child: Image(image: AssetImage('images/dice$dice2.png'),
+                        color: pressed2 ? Colors.orange : Colors.white,
+                        )
+                        ),
                       ),
                   ),
                 ],
@@ -111,7 +142,7 @@ class _MyAppState extends State<MyApp> {
                   Expanded(
                     child: Text(
                       textAlign: TextAlign.center,
-                      '0',
+                      '$score1',
                           style: TextStyle(
                             fontSize: 30,
                             color: Colors.white,
@@ -123,7 +154,7 @@ class _MyAppState extends State<MyApp> {
                   Expanded(
                     child: Text(
                       textAlign: TextAlign.center,
-                      '1',
+                      '$score2',
                                           style: TextStyle(
                             fontSize: 30,
                             color: Colors.white,
