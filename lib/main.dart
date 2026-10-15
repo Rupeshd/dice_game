@@ -23,6 +23,7 @@ class _MyAppState extends State<MyApp> {
   var pressed1 = true;
   var pressed2 = false;
   var winner = "?";
+  var pressed3 = false;
 
 
   @override
@@ -176,11 +177,14 @@ class _MyAppState extends State<MyApp> {
                 ],
               ),
               SizedBox(height: 30,),
+
               TextButton(
                 onPressed: (){
                   setState(() {
                     dice1 = Random().nextInt(6)+1;
                     dice2 = Random().nextInt(6)+1;
+                    pressed3 = !pressed3;
+                    
                   });
                 },
                 child: Container(
@@ -189,18 +193,22 @@ class _MyAppState extends State<MyApp> {
                   padding: EdgeInsets.all(1),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    border: Border.all(width: 3, color: Colors.orange)
+                    border: Border.all(width: 3, color: pressed3 ? Colors.amber : Colors.white),
                   ),
                   child: Text(
                     
                     'start',
                     
                     textAlign: TextAlign.center,
+                    
                     style: TextStyle(
                                 fontSize: 30,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold
+                              
                               ),
+                              
+
                   ),
                 ),
               )
