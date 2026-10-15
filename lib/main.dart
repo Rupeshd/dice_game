@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -35,6 +37,7 @@ class _MyAppState extends State<MyApp> {
             children: [
               SizedBox(height: 60,),
               Text(
+
                 'Winner: ?',
                 style: TextStyle(
                   fontSize: 30,
@@ -75,21 +78,33 @@ class _MyAppState extends State<MyApp> {
               Row(
                 children: [
                   Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Expanded(child: Image.asset('images/dice$dice1.png')),
-                    ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: TextButton(
+                      onPressed: () {
+                      setState(() {
+                        dice1 = Random().nextInt(6) + 1;
+                      });
+                    },
+                      child: Image.asset('images/dice$dice1.png')),
                   ),
+                ),
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.all(15.0),
-                      child: Expanded(child: Image.asset('images/dice$dice2.png')),
-                    ),
+                      child: TextButton(
+                        onPressed: () {
+                      setState(() {
+                        dice2 = Random().nextInt(6) + 1;
+                      });
+                    },
+                        child: Expanded(child: Image.asset('images/dice$dice2.png'))),
+                      ),
                   ),
                 ],
               ),
 
-              SizedBox(height: 60,),
+              SizedBox(height: 20,),
               
               Row(
                 children: [
@@ -122,8 +137,8 @@ class _MyAppState extends State<MyApp> {
               TextButton(
                 onPressed: (){
                   setState(() {
-                    dice1 = 2;
-                    dice2 = 6;
+                    dice1 = Random().nextInt(6)+1;
+                    dice2 = Random().nextInt(6)+1;
                   });
                 },
                 child: Container(
