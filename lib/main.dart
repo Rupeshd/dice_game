@@ -22,6 +22,7 @@ class _MyAppState extends State<MyApp> {
   var player = false;
   var pressed1 = true;
   var pressed2 = false;
+  var winner = "?";
 
 
   @override
@@ -46,7 +47,7 @@ class _MyAppState extends State<MyApp> {
               SizedBox(height: 60,),
               Text(
 
-                'Winner: ?',
+                'Winner: $winner',
                 style: TextStyle(
                   fontSize: 30,
                   color: Colors.white,
@@ -120,6 +121,16 @@ class _MyAppState extends State<MyApp> {
                             score1++;
                           }else if (dice2 > dice1){
                             score2++;
+                          }
+                          if (++round == 4){
+                            if(score1 > score2){
+                              winner = "Player 1";
+                            }
+                            else if (score2>score1){
+                              winner = "player 2";;
+                            }else {
+                              winner = "Draw";
+                            }
                           }
 
                           
