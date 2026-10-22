@@ -14,6 +14,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
+   
   var dice1 = 1;
   var dice2 = 1;
   var score1 = 0;
@@ -93,7 +95,7 @@ class _MyAppState extends State<MyApp> {
                     child: TextButton(
                       onPressed: () {
                       setState(() {
-                        if(!player){
+                        if(started && !player && round < 3){
                           dice1 = Random().nextInt(6)+1;
                           player = true;
                           pressed2= false;
@@ -113,7 +115,7 @@ class _MyAppState extends State<MyApp> {
                       child: TextButton(
                         onPressed: () {
                       setState(() {
-                        if(player){
+                        if(started && player && round < 3){
                           dice2 = Random().nextInt(6)+1;
                           player = false;
                           pressed2= true;
@@ -123,12 +125,14 @@ class _MyAppState extends State<MyApp> {
                           }else if (dice2 > dice1){
                             score2++;
                           }
-                          if (++round == 4){
+                          round ++ ;
+                          if (round == 3){
+                            started == false;
                             if(score1 > score2){
                               winner = "Player 1";
                             }
                             else if (score2>score1){
-                              winner = "player 2";;
+                              winner = "player 2";
                             }else {
                               winner = "Draw";
                             }
@@ -181,12 +185,23 @@ class _MyAppState extends State<MyApp> {
               TextButton(
                 onPressed: (){
                   setState(() {
-                    dice1 = Random().nextInt(6)+1;
-                    dice2 = Random().nextInt(6)+1;
-                    started = !started;
-                    
+                    if(!started){
+                      dice1 = 1;
+                      dice2 = 2;
+                      score1 = 0;
+                      score2 = 0;
+                      round = 0;
+                      player = false;
+                      pressed1 = true;
+                      pressed2 = false;
+                      winner = "?";
+                      started = false;
+                    }
                   });
+                  started = !started;
                 },
+
+
                 child: Container(
                   width: 115,
                   
@@ -205,9 +220,7 @@ class _MyAppState extends State<MyApp> {
                     style: TextStyle(
                                 fontSize: 20,
                                 color: Colors.white,
-                                fontWeight: FontWeight.bold
-
-                              
+                                fontWeight: FontWeight.bold                              
                               ),
                               
 
